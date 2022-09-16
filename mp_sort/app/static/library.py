@@ -1,13 +1,20 @@
 from org.transcrypt.stubs.browser import *
 import random
 
+def insertion_sort(array_list: list) -> list:
+	for outer_index in range(1, len(array_list)):
+			inner_index = outer_index
+			while (inner_index > 0) and (array_list[inner_index] < array_list[inner_index-1]):
+				array_list[inner_index-1], array_list[inner_index] = array_list[inner_index], array_list[inner_index-1]
+				inner_index -= 1
+	return array_list
+
 def gen_random_int(number, seed):
 	array = []
 	for i in range(number):
 		array.append(i)
 	random.seed(seed)
 	random.shuffle(array)
-	print(array)
 	return array
 
 def generate():
@@ -15,8 +22,8 @@ def generate():
 	seed = 200
 	array = gen_random_int(number, seed)
 	array_str = str(array)
-	array_str = array_str.strip("[]")
-	array_str = array_str.rstrip(",")
+	array_str = array_str.replace("[", "")
+	array_str = array_str.replace("]", "")
 	array_str = array_str + "."
 	# convert the items into one single string 
 	# the number should be separated by a comma
@@ -36,12 +43,14 @@ def sortnumber1():
 		- call your sort function, either bubble sort or insertion sort
 		- create a string of the sorted numbers and store it in array_str
 	'''
-	number_l = document.getElementById("generate").innerHTML
-	console.log(number_l)
-	pass
+	array = document.getElementById("generate").innerHTML
+	array_list = array.replace(" ", "")
+	array_list = array_list.replace("[", "")
+	array_list = array_list.replace("]", "")
+	array_list = array_list.replace(".", "")
+	array_list = list(array_list.replace(",", ""))
 
-	array_str = None
-	
+	array_str = insertion_sort(array_list)
 	document.getElementById("sorted").innerHTML = array_str
 
 def sortnumber2():
